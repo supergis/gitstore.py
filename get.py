@@ -32,4 +32,5 @@ if __name__ == "__main__":
     if not util.gitDirExists(args.storedir):
         sys.exit(args.storedir + ' does not exist')
 
+    os.chdir(args.storedir)
     get(args)
