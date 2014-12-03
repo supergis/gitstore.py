@@ -3,20 +3,9 @@ import os
 import sys
 import subprocess as sp
 import json
+import util
 
-parser = ap.ArgumentParser()
-
-parser.add_argument("storedir", help='directory of git repo')
-parser.add_argument("storefile", help='file in which data will be stored')
-parser.add_argument("data", help='the data to commit')
-
-parser.add_argument("--parent", help='specify parent commit')
-parser.add_argument("--ref", help='try as ref if possible, otherwise sha will be returned')
-
-args = parser.parse_args()
-
-if __name__ == "__main__":
-    os.chdir(args.storedir)
+def put(args):
     proc = sp.Popen(['git', 'hash-object', '-w', '--stdin'], stdin=sp.PIPE, stdout=sp.PIPE)
     (sha0,_) = proc.communicate(args.data)
     sha = sha0.rstrip()
@@ -55,3 +44,19 @@ if __name__ == "__main__":
             print json.dumps({'ref': args.ref})
     else:
         print json.dumps({'ref': commitId})
+
+if __name__ == "__main__":
+    parser = ap.ArgumentParser()
+
+    parser.add_argument("storedir", help='directory of git repo')
+    parser.add_argument("storefile", help='file in which data will be stored')
+    parser.add_argument("data", help='the data to commit')
+    parser.add_argument("--parent", help='specify parent commit')
+    parser.add_argument("--ref", help='try as ref if possible, otherwise sha will be returned')
+
+    args = parser.parse_args()
+
+    if not util.gitDirExists(args.storedir):
+        sys.exit(args.storedir + ' does not exist')
+
+    put(args)
