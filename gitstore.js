@@ -5,15 +5,11 @@ module.exports =
 
         var python = '/usr/bin/python';
 
-        var pushFlags = function(args, flags) {
+        var exec = function(cmd0, args, flags, callback){
+            cmd = [__dirname + '/' + cmd0].concat(args);
             for(k in flags) {
                 args.push('--' + k + '=' + flags[k]);
             }
-        };
-
-        var exec = function(cmd0, args, flags, callback){
-            cmd = [__dirname + '/' + cmd0].concat(args);
-            if(flags) pushFlags(cmd, flags);
             ef(python, cmd, callback);
         };
 
