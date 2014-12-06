@@ -15,7 +15,7 @@ module.exports =
 
         return {
             init: function(dir, callback){
-                exec('init.py', [dir], [], callback)
+                exec('init.py', [dir], {}, callback)
             },
 
             put: function(dir, file, data, flags, callback){
