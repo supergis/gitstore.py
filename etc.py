@@ -14,7 +14,7 @@ if __name__ == "__main__":
     parser = ap.ArgumentParser()
 
     parser.add_argument("storedir", help='directory of git repo')
-    parser.add_argument("--list", help='get all commits in that ref')
+    parser.add_argument("--list", help='list something')
 
     args = parser.parse_args()
 
